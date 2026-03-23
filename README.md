@@ -9,8 +9,7 @@
 - [How to Run](#how-to-run)
 
 ## Project Description  
-**MATVIKO** is a mobile music streaming application similar to Spotify.  
-The main goal of the project is to create a modern and user-friendly app that allows users to easily discover, listen to, and save music in one place.  
+**MATVIKO** is a mobile music streaming application similar to Spotify. The main goal of the project is to create a modern and user-friendly app that allows users to easily discover, listen to, and save music in one place.  
 
 ## Features  
 - Stream music online through a clean and intuitive interface  
