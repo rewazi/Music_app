@@ -1,19 +1,56 @@
-# MATVIKO - NEW Music App 
+# MATVIKO - New Music App  
 
-## Projekti kirjeldus
-**MATVIKO** on mobiilirakendus muusika kuulamiseks, mis on sarnane Spotify'le.  
-Projekti peamine eesmärk on luua mugav ja kaasaegne rakendus, mis võimaldab kasutajatel lihtsalt leida, kuulata ja salvestada muusikat ühes kohas.
+## Navigation
+- [Project Description](#project-description)
+- [Features](#features)
+- [Development Model](#development-model)
+- [Project Structure](#project-structure)
+- [Team Members](#team-members)
+- [How to Run](#how-to-run)
 
-Funktsioonid:
-- muusika kuulamine internetis mugava kasutajaliidese kaudu  
-- esitusloendite loomine ja haldamine  
-- lugude, artistide ja albumite otsimine märksõnade abil  
-- lemmikmuusika salvestamine kiireks ligipääsuks  
-- ja nii edasi (funktsionaalsust laiendatakse arenduse käigus)  
+## Project Description  
+**MATVIKO** is a mobile music streaming application similar to Spotify.  
+The main goal of the project is to create a modern and user-friendly app that allows users to easily discover, listen to, and save music in one place.  
 
-## Arendusmudel
-Projektis kasutatakse **Kanban** arendusmudelit, mis aitab meeskonnal tööprotsessi tõhusalt korraldada.
+## Features  
+- Stream music online through a clean and intuitive interface  
+- Create and manage playlists  
+- Search for songs, artists, and albums using keywords  
+- Save favorite tracks for quick access  
+- More features will be added during development  
 
-- paindlik ülesannete haldus ilma rangete ajapiiranguteta  
-- selge ja visuaalne arendusprotsess ülesannete tahvli abil  
-- sobib väikesele meeskonnale ja lihtsustab töö jaotamist  
+## Development Model  
+The project uses the **Kanban** development model to keep the workflow organized and efficient.  
+
+- Flexible task management without strict deadlines  
+- Clear and visual workflow using a task board  
+- Well-suited for small teams and easy task distribution  
+
+## Project Structure
+
+```
+com.example.musicapp/
+├── ui.theme/                # Colors, typography, theming
+├── LoginScreen.kt           # Login screen
+├── MainActivity.kt          # Main activity of the app
+├── manifests/               # App manifest
+├── res/
+│   ├── drawable/            # Images, icons
+│   ├── mipmap/              # Launcher icons
+│   └── values/              # Strings, colors, dimens, styles
+└── test/                    # Unit and instrumented tests
+```
+
+## Team Members
+
+| Name | GitHub Username |
+|------|----------------|
+| Ivan Petrov | [@KRAKENN8](https://github.com/KRAKENN8) |
+| Maksim Koroljov | [@rewazi](https://github.com/rewazi) |
+
+## How to Run
+
+1. Clone the repository
+2. Open the project in Android Studio
+3. Sync Gradle dependencies
+4. Run the app on an emulator or physical device
