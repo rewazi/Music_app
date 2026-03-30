@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(onNavigateToRegistration: () -> Unit) {
+fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     
@@ -96,7 +96,7 @@ fun LoginScreen(onNavigateToRegistration: () -> Unit) {
                             val response = RetrofitClient.instance.login(email, password)
                             if (response.success) {
                                 Toast.makeText(context, "Login successful!", Toast.LENGTH_SHORT).show()
-                                // Handle successful login (e.g., navigate to home)
+                                onLoginSuccess()
                             } else {
                                 Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
                             }
