@@ -14,6 +14,21 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+object RetrofitClient {
+    // Replace with your local IP address for XAMPP (usually 10.0.2.2 for Android Emulator)
+    private const val BASE_URL = "http://10.0.2.2/musicapp/"
+
+    val instance: ApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
+    }
+}
 
 @Composable
 fun WaveTop() {
@@ -99,17 +114,18 @@ fun WaveBottom() {
 
 @Composable
 fun InputField(
+    value: String,
+    onValueChange: (String) -> Unit,
     hint: String,
     isPassword: Boolean = false,
     leadingIcon: ImageVector? = null,
     showBorder: Boolean = false
 ) {
-    var text by remember { mutableStateOf("") }
     val shape = RoundedCornerShape(12.dp)
     
     TextField(
-        value = text,
-        onValueChange = { text = it },
+        value = value,
+        onValueChange = onValueChange,
         placeholder = { Text(hint, color = Color(0xFFAAAAAA)) },
         leadingIcon = leadingIcon?.let { { Icon(it, contentDescription = null, tint = Color(0xFFE8622A)) } },
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
@@ -121,6 +137,7 @@ fun InputField(
                 color = if (showBorder) Color.White.copy(alpha = 0.3f) else Color.Transparent,
                 shape = shape
             ),
+        singleLine = true,
         shape = shape,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color(0xFF6B2347).copy(alpha = 0.5f),
