@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,16 +62,16 @@ fun MainScreen() {
                             Text("Welcome", color = Color.White, fontSize = 16.sp)
                             Spacer(modifier = Modifier.width(8.dp))
                             Icon(
-                                Icons.Default.AccountCircle,
+                                painter = painterResource(R.drawable.qlementine_icons_user_16),
                                 contentDescription = null,
-                                tint = Color(0xFFE8622A),
+                                tint = Color(0xFFF0A202),
                                 modifier = Modifier.size(32.dp)
                             )
                         }
                     },
                     navigationIcon = {
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {
-                            Icon(Icons.Default.Menu, contentDescription = null, tint = Color(0xFFE8622A))
+                            Icon(painter = painterResource(R.drawable.menu), contentDescription = null, tint = Color(0xFFF0A202))
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -171,7 +172,7 @@ fun MainContent(padding: PaddingValues) {
         }
     } else if (albums.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator(color = Color(0xFFE8622A))
+            CircularProgressIndicator(color = Color(0xFFF18805))
         }
     } else {
         Column(modifier = Modifier.padding(padding).fillMaxSize()) {
@@ -199,7 +200,7 @@ fun MainContent(padding: PaddingValues) {
                     beyondViewportPageCount = 1
                 ) { page ->
                     val album = albums[page]
-                    Box(modifier = Modifier.fillMaxSize().background(Color(0xFFE8622A))) {
+                    Box(modifier = Modifier.fillMaxSize().background(Color(0xFFF18805))) {
                         AsyncImage(
                             model = album.bannerUrl,
                             contentDescription = null,
@@ -285,12 +286,12 @@ fun AlbumItem(album: Album) {
         AsyncImage(
             model = album.imageUrl,
             contentDescription = null,
-            modifier = Modifier.aspectRatio(1f).clip(RoundedCornerShape(16.dp)).background(Color(0xFFE8622A)),
+            modifier = Modifier.aspectRatio(1f).clip(RoundedCornerShape(16.dp)).background(Color(0xFFF18805)),
             contentScale = ContentScale.Crop
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(album.title, color = Color.White, fontWeight = FontWeight.Bold)
-        Text(album.singerName, color = Color(0xFFE8622A), fontSize = 12.sp)
+        Text(album.singerName, color = Color(0xFFD95D39), fontSize = 12.sp)
     }
 }
 
@@ -302,15 +303,15 @@ fun BottomPlayerBar() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Icon(Icons.Default.PlayArrow, contentDescription = null, tint = Color(0xFFE8622A))
-            Icon(Icons.Default.Refresh, contentDescription = null, tint = Color.White, modifier = Modifier.size(20.dp))
-            Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = null, tint = Color(0xFFE8622A))
+            Icon(Icons.Default.PlayArrow, contentDescription = null, tint = Color(0xFFD95D39))
+            Icon(painter = painterResource(id = R.drawable.material_symbols_repeat), contentDescription = null, tint = Color.White, modifier = Modifier.size(20.dp))
+            Icon(painter = painterResource(id = R.drawable.skip_next), contentDescription = null, tint = Color(0xFFD95D39))
             
             Text("Singer - Song Title", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
             
-            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = Color(0xFFE8622A))
-            Icon(Icons.AutoMirrored.Filled.Send, contentDescription = null, tint = Color.White, modifier = Modifier.size(20.dp))
-            Icon(Icons.Default.KeyboardArrowUp, contentDescription = null, tint = Color(0xFFE8622A))
+            Icon(painter = painterResource(id = R.drawable.skip_next1), contentDescription = null, tint = Color(0xFFD95D39))
+            Icon(painter = painterResource(id = R.drawable.vector), contentDescription = null, tint = Color(0xFFD95D39),modifier = Modifier.offset(y = 4.dp))
+            Icon(Icons.Default.KeyboardArrowUp, contentDescription = null, tint = Color(0xFFD95D39))
         }
     }
 }
