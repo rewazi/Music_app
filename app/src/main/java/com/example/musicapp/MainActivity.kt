@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
 import com.example.musicapp.ui.theme.MusicAppTheme
 import kotlinx.coroutines.launch
 
@@ -56,14 +57,14 @@ class MainActivity : ComponentActivity() {
 fun RegistrationScreen(onNavigateToLogin: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    
+
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxSize().background(Color(0xFF4A1535))) {
+    Box(modifier = Modifier.fillMaxSize().background(Color(0xff320A28))) {
         WaveTop()
         Box(modifier = Modifier.align(Alignment.BottomCenter)) { WaveBottom() }
         Column(
@@ -75,14 +76,14 @@ fun RegistrationScreen(onNavigateToLogin: () -> Unit) {
             Spacer(modifier = Modifier.height(8.dp))
             Text("Create an account on MusicApp to get all features", color = Color(0xFFCCCCCC), fontSize = 13.sp, textAlign = TextAlign.Center)
             Spacer(modifier = Modifier.height(28.dp))
-            
+
             InputField(value = username, onValueChange = { username = it }, hint = "Username")
             InputField(value = email, onValueChange = { email = it }, hint = "Email")
             InputField(value = password, onValueChange = { password = it }, hint = "Password", isPassword = true)
             InputField(value = confirmPassword, onValueChange = { confirmPassword = it }, hint = "Confirm Password", isPassword = true)
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Button(
                 onClick = {
                     if (password != confirmPassword) {
@@ -93,7 +94,7 @@ fun RegistrationScreen(onNavigateToLogin: () -> Unit) {
                         Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
                         return@Button
                     }
-                    
+
                     isLoading = true
                     scope.launch {
                         try {
@@ -111,9 +112,9 @@ fun RegistrationScreen(onNavigateToLogin: () -> Unit) {
                         }
                     }
                 },
-                modifier = Modifier.fillMaxWidth().height(52.dp),
+                modifier = Modifier.width(200.dp).height(52.dp),
                 enabled = !isLoading,
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(14.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE8622A))
             ) {
                 if (isLoading) {
@@ -122,7 +123,7 @@ fun RegistrationScreen(onNavigateToLogin: () -> Unit) {
                     Text("Create", fontSize = 16.sp, fontWeight = FontWeight.Bold)
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
 
             Row {
