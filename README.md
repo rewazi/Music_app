@@ -3,16 +3,12 @@
 ## Project Description  
 **MATVIKO** is a mobile music streaming application similar to Spotify. The main goal of the project is to create a modern and user-friendly app that allows users to easily discover, listen to, and save music in one place.  
 
----
-
 ## Features  
 - Stream music online through a clean and intuitive interface  
 - Create and manage playlists  
 - Search for songs, artists, and albums using keywords  
 - Save favorite tracks for quick access  
 - More features will be added during development  
-
----
 
 ## Tech Stack  
 
@@ -21,8 +17,6 @@
 - **Database:** MySQL  
 - **Architecture:** No formal architecture (planned: Component-Based Architecture)  
 - **Tools:** Android Studio, Gradle  
-
----
 
 ## Architecture  
 
@@ -38,8 +32,6 @@ This approach allows:
 
 Component-Based Architecture is well-suited for modern Android development with Jetpack Compose, as it aligns with declarative UI principles and promotes a clean, structured codebase.  
 
----
-
 ## Screens description
 
 - **Registration Screen**  
@@ -51,11 +43,7 @@ Component-Based Architecture is well-suited for modern Android development with 
 - **Main Screen**  
   Main page with music
 
----
-
 ## Design Screenshots   
-
-> Add your images to a `/screenshots/` folder in the repository.
 
 ### Registration Screen
 ![Search](screenshots/Phone - Registration.png)
@@ -66,8 +54,6 @@ Component-Based Architecture is well-suited for modern Android development with 
 ### Main Screen
 ![Home](screenshots/Phone - Main.png)
 
----
-
 ## Development Model  
 
 The project uses the **Kanban** development model to keep the workflow organized and efficient.  
@@ -75,8 +61,6 @@ The project uses the **Kanban** development model to keep the workflow organized
 - Flexible task management without strict deadlines  
 - Clear and visual workflow using a task board  
 - Well-suited for small teams and easy task distribution  
-
----
 
 ## Project Structure
 
@@ -101,16 +85,12 @@ com.example.musicapp/
 └── test/                    # Unit and instrumented tests
 ```
 
----
-
 ## Team Members  
 
 | Name | GitHub Username |
 |------|----------------|
 | Ivan Petrov | [@KRAKENN8](https://github.com/KRAKENN8) |
 | Maksim Koroljov | [@rewazi](https://github.com/rewazi) |
-
----
 
 ## How to Run  
 
