@@ -14,7 +14,7 @@
 
 - **Language:** Kotlin  
 - **UI:** Jetpack Compose  
-- **Database:** MySQL  
+- **Database:** MySQL(XAMPP)  
 - **Architecture:** No formal architecture (planned: Component-Based Architecture)  
 - **Tools:** Android Studio, Gradle  
 
@@ -66,6 +66,8 @@ The project uses the **Kanban** development model to keep the workflow organized
 
 ```
 com.example.musicapp/
+├── manifests/               # App manifest
+│   └── AndroidManifest.xml  # Parameters
 ├── ui.theme/                # Colors, typography, theming
 │   ├── Color.kt             # Colors
 │   ├── Theme.kt             # Themes
@@ -76,7 +78,6 @@ com.example.musicapp/
 ├── MainActivity.kt          # Registration screen
 ├── MainScreen.kt            # Main screen
 ├── Models.kt                # Music API data models
-├── manifests/               # App manifest
 ├── res/
 │   ├── drawable/            # Images, icons
 │   ├── mipmap/              # Launcher icons
@@ -97,5 +98,7 @@ com.example.musicapp/
 1. Clone the repository  
 2. Open the project in Android Studio  
 3. Sync Gradle dependencies
-4. Import sql file in db 
-5. Run the app on an emulator or physical device 
+4. Import sql file in db
+5. Create in xampp\htdocs directory named "musicapp"
+6. Start Apache and MySQL in XAMPP
+7. Run the app on an emulator or physical device 
