@@ -99,6 +99,6 @@ com.example.musicapp/
 2. Open the project in Android Studio  
 3. Sync Gradle dependencies
 4. Import sql file in db
-5. Create in xampp\htdocs directory named "musicapp"
+5. Move in xampp\htdocs directory named "musicapp"
 6. Start Apache and MySQL in XAMPP
 7. Run the app on an emulator or physical device 
