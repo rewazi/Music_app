@@ -28,6 +28,7 @@ sealed class Screen {
     object Registration : Screen()
     object Login : Screen()
     object Main : Screen()
+    object Profile : Screen()
 }
 
 class MainActivity : ComponentActivity() {
@@ -40,12 +41,19 @@ class MainActivity : ComponentActivity() {
 
                 Surface(modifier = Modifier.fillMaxSize()) {
                     when (currentScreen) {
-                        is Screen.Registration -> RegistrationScreen(onNavigateToLogin = { currentScreen = Screen.Login })
+                        is Screen.Registration -> RegistrationScreen(
+                            onNavigateToLogin = { currentScreen = Screen.Login }
+                        )
                         is Screen.Login -> LoginScreen(
                             onNavigateToRegistration = { currentScreen = Screen.Registration },
                             onLoginSuccess = { currentScreen = Screen.Main }
                         )
-                        is Screen.Main -> MainScreen()
+                        is Screen.Main -> MainScreen(
+                            onNavigateToProfile = { currentScreen = Screen.Profile }
+                        )
+                        is Screen.Profile -> ProfileScreen(
+                            onNavigateBack = { currentScreen = Screen.Main }
+                        )
                     }
                 }
             }
