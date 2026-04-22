@@ -12,7 +12,8 @@
 
 ## Tech Stack  
 
-- **Language:** Kotlin  
+- **Frontend Language:** Kotlin
+- **Backend Language:** PHP  
 - **UI:** Jetpack Compose  
 - **Database:** MySQL(XAMPP)  
 - **Architecture:** No formal architecture (planned: Component-Based Architecture)  
