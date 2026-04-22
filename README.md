@@ -75,7 +75,7 @@ Component-Based Architecture is well-suited for modern Android development with 
 ![Main](screenshots/Main.png)
 
 ## Figma Design
-![Preview](https://www.figma.com/proto/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO?node-id=0-1)
+![Open Prototype](https://www.figma.com/design/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO?node-id=0-1&m=dev&t=vvu323MPyLMxiJPB-1)
 
 ## Figma Prototype
 [Open Prototype](https://www.figma.com/proto/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO)
