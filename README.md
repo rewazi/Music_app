@@ -11,6 +11,8 @@
   * [Registration Screen](#registration-screen)
   * [Login Screen](#login-screen)
   * [Main Screen](#main-screen)
+* [Figma Design](#figma-design)
+* [Figma Prototype](#figma-prototype)
 * [Development Model](#development-model)
 * [Project Structure](#project-structure)
 * [Backend Structure](#backend-structure)
@@ -71,6 +73,12 @@ Component-Based Architecture is well-suited for modern Android development with 
 
 ### Main Screen
 ![Main](screenshots/Main.png)
+
+## Figma Design
+![Preview](https://www.figma.com/proto/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO?node-id=0-1)
+
+## Figma Prototype
+[Open Prototype](https://www.figma.com/proto/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO)
 
 ## Development Model  
 
