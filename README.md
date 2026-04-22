@@ -87,6 +87,16 @@ com.example.musicapp/
 └── test/                    # Unit and instrumented tests
 ```
 
+## Backend Structure
+
+```
+musicapp/
+└── db_config.php # Database settings
+└── get_albums.php # Album and banner display function
+└── login.php # Login function
+└── register.php # Registration function
+```
+
 ## Team Members  
 
 | Name | GitHub Username |
