@@ -6,13 +6,13 @@
 * [Features](#features)
 * [Tech Stack](#tech-stack)
 * [Architecture](#architecture)
+* [Figma Design](#figma-design)
+* [Figma Prototype](#figma-prototype)
 * [Screens Description](#screens-description)
 * [Design Screenshots](#design-screenshots)
   * [Registration Screen](#registration-screen)
   * [Login Screen](#login-screen)
   * [Main Screen](#main-screen)
-* [Figma Design](#figma-design)
-* [Figma Prototype](#figma-prototype)
 * [Development Model](#development-model)
 * [Project Structure](#project-structure)
 * [Backend Structure](#backend-structure)
@@ -52,6 +52,12 @@ This approach allows:
 
 Component-Based Architecture is well-suited for modern Android development with Jetpack Compose, as it aligns with declarative UI principles and promotes a clean, structured codebase.  
 
+## Figma Design
+[Open Design](https://embed.figma.com/design/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO?node-id=0-1&embed-host=share)
+
+## Figma Prototype
+[Open Prototype](https://www.figma.com/proto/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO)
+
 ## Screens description
 
 - **Registration Screen**  
@@ -73,12 +79,6 @@ Component-Based Architecture is well-suited for modern Android development with 
 
 ### Main Screen
 ![Main](screenshots/Main.png)
-
-## Figma Design
-[Open Design](https://embed.figma.com/design/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO?node-id=0-1&embed-host=share)
-
-## Figma Prototype
-[Open Prototype](https://www.figma.com/proto/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO)
 
 ## Development Model  
 
