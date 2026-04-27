@@ -92,26 +92,32 @@ The project uses the **Kanban** development model to keep the workflow organized
 
 ```
 com.example.musicapp/
-├── manifests/               # App manifest
-│   └── AndroidManifest.xml  # Parameters
-├── ui.theme/                # Colors, typography, theming
-│   ├── Color.kt             # Colors
-│   ├── Theme.kt             # Themes
-│   └── Type.kt              # Typography
-├── ApiService.kt            # Retrofit API interface (login, register, albums)
-├── AppNavGraph.kt           # Navigation
-├── Common.kt                # Assets(Text fields, animations and so on)
-├── LoginScreen.kt           # Login screen
-├── MainActivity.kt          # Registration screen
-├── MainScreen.kt            # Main screen
-├── Models.kt                # Music API data models
-├── ProfileScreen.kt         # Profile screen
-├── res/
-│   ├── drawable/            # Images, icons
-│   ├── mipmap/              # Launcher icons
-│   ├── values/              # Strings, colors, dimens, styles
-│   └── xml/                 # Backup and data extraction rules
-└── test/                    # Unit and instrumented tests
+├── data/                         # Data layer
+│   ├── model/                    # Data models
+│   │   ├── Album.kt              # Album model
+│   │   ├── Song.kt               # Song model
+│   │   └── AuthResponse.kt       # Server response to authorization
+│   └── network/                  # Retrofit
+│       ├── ApiService.kt         # Description of API requests
+│       └── RetrofitClient.kt     # Client сonfiguration
+├── ui/                           # User interface
+│   ├── components/               # Reusable components
+│   │   ├── inputs/               # Input fields (InputField.kt)
+│   │   ├── items/                # List elements (AlbumItem, DrawerItems, ProfileMenuItem)
+│   │   ├── layout/               # Decorations and animations (WaveTop, WaveBottom, WaveState)
+│   │   ├── player/               # Player elements (BottomPlayerBar, InfoChip)
+│   │   └── social/               # Social icons (ExternalSocialIcon)
+│   ├── navigation/               # Navigation
+│   │   └── AppNavGraph.kt        # Route description
+│   ├── screens/                  # Application screens (full pages)
+│   │   ├── login/                # Logic and layout of the entrance
+│   │   ├── registration/         # Registration
+│   │   ├── main/                 # Home screen (MainContent, DrawerContent, SongInfoFullScreen)
+│   │   └── profile/              # User profile
+│   └── theme/                    # Theming (Color.kt, Theme.kt, Type.kt)
+├── MainActivity.kt               # Entry point, shared state management (Screen, WaveState)
+├── manifests/                    # Application manifest
+└── res/                          # Resources (drawable, mipmap, values)
 ```
 
 ## Backend Structure
