@@ -34,9 +34,9 @@
 - **Frontend Language:** Kotlin
 - **Backend Language:** PHP  
 - **UI:** Jetpack Compose  
-- **Database:** MySQL(XAMPP)  
+- **Database:** MySQL
 - **Architecture:** No formal architecture (planned: Component-Based Architecture)  
-- **Tools:** Android Studio, Gradle  
+- **Tools:** Android Studio, Gradle, Figma, XAMPP  
 
 ## Architecture  
 
@@ -81,6 +81,7 @@ Component-Based Architecture is well-suited for modern Android development with 
 ![Main](screenshots/Main.png)
 
 ## Development Model  
+
 The project uses the **Kanban** development model to keep the workflow organized and efficient.  
 
 - Flexible task management without strict deadlines  
@@ -91,14 +92,25 @@ The project uses the **Kanban** development model to keep the workflow organized
 
 ```
 com.example.musicapp/
-├── ui.theme/                # Colors, typography, theming
-├── LoginScreen.kt           # Login screen
-├── MainActivity.kt          # Main activity of the app
 ├── manifests/               # App manifest
+│   └── AndroidManifest.xml  # Parameters
+├── ui.theme/                # Colors, typography, theming
+│   ├── Color.kt             # Colors
+│   ├── Theme.kt             # Themes
+│   └── Type.kt              # Typography
+├── ApiService.kt            # Retrofit API interface (login, register, albums)
+├── AppNavGraph.kt           # Navigation
+├── Common.kt                # Assets(Text fields, animations and so on)
+├── LoginScreen.kt           # Login screen
+├── MainActivity.kt          # Registration screen
+├── MainScreen.kt            # Main screen
+├── Models.kt                # Music API data models
+├── ProfileScreen.kt         # Profile screen
 ├── res/
 │   ├── drawable/            # Images, icons
 │   ├── mipmap/              # Launcher icons
-│   └── values/              # Strings, colors, dimens, styles
+│   ├── values/              # Strings, colors, dimens, styles
+│   └── xml/                 # Backup and data extraction rules
 └── test/                    # Unit and instrumented tests
 ```
 
@@ -119,9 +131,12 @@ musicapp/
 | Ivan Petrov | [@KRAKENN8](https://github.com/KRAKENN8) |
 | Maksim Koroljov | [@rewazi](https://github.com/rewazi) |
 
-## How to Run
+## How to Run  
 
-1. Clone the repository
-2. Open the project in Android Studio
+1. Clone the repository  
+2. Open the project in Android Studio  
 3. Sync Gradle dependencies
-4. Run the app on an emulator or physical device
+4. Import sql file in db
+5. Move in xampp\htdocs directory named "musicapp"
+6. Start Apache and MySQL in XAMPP
+7. Run the app on an emulator or physical device 
