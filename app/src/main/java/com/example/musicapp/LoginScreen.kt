@@ -32,7 +32,7 @@ fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit
     var password by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxSize().background(Color(0xFF4A1535))) {
+    Box(modifier = Modifier.fillMaxSize().background(Color(0xFF320A28))) {
         WaveTop()
         Box(modifier = Modifier.align(Alignment.BottomCenter)) { WaveBottom() }
         
