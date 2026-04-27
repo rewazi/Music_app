@@ -5,17 +5,26 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImagePainter.State.Empty.painter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.jvm.java
 
 object RetrofitClient {
     // Replace with your local IP address for XAMPP (usually 10.0.2.2 for Android Emulator)
@@ -57,7 +66,7 @@ fun WaveTop() {
             quadraticTo(w * 0.25f - horizontalShift, h * 0.2f + shift, 0f, h * 0.75f)
             close()
         }
-        drawPath(backPath, Color(0xFF8B1A4A))
+        drawPath(backPath, Color(0xFF511730))
 
         val frontPath = Path().apply {
             moveTo(0f, 0f)
@@ -67,7 +76,7 @@ fun WaveTop() {
             quadraticTo(w * 0.25f + horizontalShift, h * 0.05f - shift, 0f, h * 0.55f)
             close()
         }
-        drawPath(frontPath, Color(0xFFC0392B))
+        drawPath(frontPath, Color(0xFFD95D39))
     }
 }
 
@@ -98,7 +107,7 @@ fun WaveBottom() {
             quadraticTo(w * 0.25f - horizontalShift, h * 0.8f - shift, 0f, h * 0.25f)
             close()
         }
-        drawPath(backPath, Color(0xFF8B1A4A))
+        drawPath(backPath, Color(0xFF511730))
 
         val frontPath = Path().apply {
             moveTo(0f, h)
@@ -108,7 +117,7 @@ fun WaveBottom() {
             quadraticTo(w * 0.25f + horizontalShift, h * 0.95f + shift, 0f, h * 0.45f)
             close()
         }
-        drawPath(frontPath, Color(0xFFC0392B))
+        drawPath(frontPath, Color(0xFFD95D39))
     }
 }
 
@@ -118,23 +127,32 @@ fun InputField(
     onValueChange: (String) -> Unit,
     hint: String,
     isPassword: Boolean = false,
-    leadingIcon: ImageVector? = null,
+    leadingIcon: Int? = null,
     showBorder: Boolean = false
 ) {
     val shape = RoundedCornerShape(12.dp)
-    
+
+    val autoIcon: Painter = painterResource(
+        id = leadingIcon ?: when {
+            hint.contains("Email", true) -> R.drawable.mail
+            hint.contains("Password", true) -> R.drawable.lock
+            else -> R.drawable.user
+        }
+    )
+
+
     TextField(
         value = value,
         onValueChange = onValueChange,
         placeholder = { Text(hint, color = Color(0xFFAAAAAA)) },
-        leadingIcon = leadingIcon?.let { { Icon(it, contentDescription = null, tint = Color(0xFFE8622A)) } },
+        leadingIcon = { Icon(autoIcon, contentDescription = null, tint = Color(0xFFC47A27)) },
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 12.dp)
             .border(
-                width = if (showBorder) 1.dp else 0.dp,
-                color = if (showBorder) Color.White.copy(alpha = 0.3f) else Color.Transparent,
+                width = 1.dp,
+                color = Color(0xFFffffff),
                 shape = shape
             ),
         singleLine = true,

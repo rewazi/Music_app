@@ -63,7 +63,7 @@ fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit
                 value = email,
                 onValueChange = { email = it },
                 hint = "Email",
-                leadingIcon = Icons.Default.Person,
+                leadingIcon = R.drawable.user,
                 showBorder = true
             )
             InputField(
@@ -71,7 +71,7 @@ fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit
                 onValueChange = { password = it },
                 hint = "Password",
                 isPassword = true,
-                leadingIcon = Icons.Default.Lock,
+                leadingIcon = R.drawable.lock,
                 showBorder = true
             )
             
