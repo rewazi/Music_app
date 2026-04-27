@@ -1,9 +1,11 @@
-package com.example.musicapp
+package com.example.musicapp.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.musicapp.ui.screens.main.MainScreen
+import com.example.musicapp.ui.screens.profile.ProfileScreen
 
 @Composable
 fun AppNavGraph() {

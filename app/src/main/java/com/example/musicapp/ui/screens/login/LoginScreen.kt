@@ -1,30 +1,35 @@
-package com.example.musicapp
+package com.example.musicapp.ui.screens.login
 
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.musicapp.R
+import com.example.musicapp.data.network.RetrofitClient
+import com.example.musicapp.ui.components.inputs.InputField
+import com.example.musicapp.ui.components.layout.WaveBottom
+import com.example.musicapp.ui.components.layout.WaveTop
+import com.example.musicapp.ui.components.layout.WaveAnimationState
+import com.example.musicapp.ui.components.social.ExternalSocialIcon
+import com.example.musicapp.ui.theme.*
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit) {
+fun LoginScreen(
+    waveState: WaveAnimationState,
+    onNavigateToRegistration: () -> Unit, 
+    onLoginSuccess: () -> Unit
+) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     
@@ -32,9 +37,11 @@ fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit
     var password by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxSize().background(Color(0xFF320A28))) {
-        WaveTop()
-        Box(modifier = Modifier.align(Alignment.BottomCenter)) { WaveBottom() }
+    Box(modifier = Modifier.fillMaxSize().background(BgDark)) {
+        WaveTop(offset = waveState.topOffset.value, horizontalShift = waveState.topHorizontal.value)
+        Box(modifier = Modifier.align(Alignment.BottomCenter)) { 
+            WaveBottom(offset = waveState.bottomOffset.value, horizontalShift = waveState.bottomHorizontal.value) 
+        }
         
         Column(
             modifier = Modifier.fillMaxSize().padding(horizontal = 32.dp),
@@ -42,20 +49,20 @@ fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit
             verticalArrangement = Arrangement.Center
         ) {
             Surface(
-                color = Color(0xFF6B2347).copy(alpha = 0.5f),
+                color = BgMedium.copy(alpha = 0.5f),
                 shape = RoundedCornerShape(50),
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
                 Text(
                     text = "Welcome back!",
-                    color = Color.White,
+                    color = White,
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
                 )
             }
             
-            Text("Log in to existing account", color = Color(0xFFCCCCCC), fontSize = 14.sp)
+            Text("Log in to existing account", color = White.copy(alpha = 0.8f), fontSize = 14.sp)
             
             Spacer(modifier = Modifier.height(32.dp))
             
@@ -77,7 +84,7 @@ fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit
             
             Text(
                 text = "Forgot Password?",
-                color = Color.White,
+                color = White,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.align(Alignment.End).padding(bottom = 24.dp)
@@ -110,10 +117,10 @@ fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit
                 modifier = Modifier.width(180.dp).height(52.dp),
                 enabled = !isLoading,
                 shape = RoundedCornerShape(20.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE8622A))
+                colors = ButtonDefaults.buttonColors(containerColor = AccentOrange)
             ) {
                 if (isLoading) {
-                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
+                    CircularProgressIndicator(color = White, modifier = Modifier.size(24.dp))
                 } else {
                     Text("Log In", fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
@@ -121,7 +128,7 @@ fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit
             
             Spacer(modifier = Modifier.height(24.dp))
             
-            Text("Or sign up using", color = Color(0xFFCCCCCC), fontSize = 13.sp)
+            Text("Or sign up using", color = White.copy(alpha = 0.8f), fontSize = 13.sp)
             
             Row(modifier = Modifier.padding(vertical = 16.dp)) {
                 ExternalSocialIcon(iconResId = R.drawable.ic_facebook, contentDescription = "Facebook")
@@ -130,10 +137,10 @@ fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit
             }
             
             Row {
-                Text("Don't have an account? ", color = Color(0xFFCCCCCC), fontSize = 13.sp)
+                Text("Don't have an account? ", color = White.copy(alpha = 0.8f), fontSize = 13.sp)
                 Text(
                     text = "Sign up",
-                    color = Color.White,
+                    color = White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
                     textDecoration = TextDecoration.Underline,
@@ -141,24 +148,5 @@ fun LoginScreen(onNavigateToRegistration: () -> Unit, onLoginSuccess: () -> Unit
                 )
             }
         }
-    }
-}
-
-@Composable
-fun ExternalSocialIcon(iconResId: Int, contentDescription: String) {
-    Box(
-        modifier = Modifier
-            .size(42.dp)
-            .clip(CircleShape)
-            .background(Color.White)
-            .clickable { /* Handle click */ },
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            painter = painterResource(id = iconResId),
-            contentDescription = contentDescription,
-            modifier = Modifier.size(24.dp),
-            tint = Color.Unspecified
-        )
     }
 }

@@ -1,5 +1,7 @@
-package com.example.musicapp
+package com.example.musicapp.data.network
 
+import com.example.musicapp.data.model.Album
+import com.example.musicapp.data.model.AuthResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
