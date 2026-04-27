@@ -42,22 +42,51 @@ fun RegistrationScreen(
         Box(modifier = Modifier.align(Alignment.BottomCenter)) { 
             WaveBottom(offset = waveState.bottomOffset.value, horizontalShift = waveState.bottomHorizontal.value) 
         }
+        
         Column(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 32.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            // Changed to Top to match LoginScreen and have absolute control
+            verticalArrangement = Arrangement.Top 
         ) {
-            Text("Let's get started!", color = White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text("Create an account on MusicApp to get all features", color = White.copy(alpha = 0.8f), fontSize = 13.sp, textAlign = TextAlign.Center)
-            Spacer(modifier = Modifier.height(28.dp))
+            // Shared fixed Spacer to align starting point of content
+            Spacer(modifier = Modifier.fillMaxHeight(0.22f))
 
-            InputField(value = username, onValueChange = { username = it }, hint = "Username")
-            InputField(value = email, onValueChange = { email = it }, hint = "Email")
-            InputField(value = password, onValueChange = { password = it }, hint = "Password", isPassword = true)
-            InputField(value = confirmPassword, onValueChange = { confirmPassword = it }, hint = "Confirm Password", isPassword = true)
+            // Standardized Header Pill with fixed width
+            Surface(
+                color = BgMedium.copy(alpha = 0.6f),
+                shape = RoundedCornerShape(50),
+                modifier = Modifier
+                    .width(280.dp)
+                    .padding(bottom = 12.dp)
+            ) {
+                Text(
+                    text = "Let's get started!",
+                    color = White,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(vertical = 10.dp).fillMaxWidth()
+                )
+            }
+            
+            Text(
+                text = "Create an account on MusicApp to get all features", 
+                color = White.copy(alpha = 0.7f), 
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center
+            )
+            
+            Spacer(modifier = Modifier.height(48.dp))
 
-            Spacer(modifier = Modifier.height(12.dp))
+            InputField(value = username, onValueChange = { username = it }, hint = "Username", showBorder = true)
+            InputField(value = email, onValueChange = { email = it }, hint = "Email", showBorder = true)
+            InputField(value = password, onValueChange = { password = it }, hint = "Password", isPassword = true, showBorder = true)
+            InputField(value = confirmPassword, onValueChange = { confirmPassword = it }, hint = "Confirm Password", isPassword = true, showBorder = true)
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = {
@@ -87,19 +116,27 @@ fun RegistrationScreen(
                         }
                     }
                 },
-                modifier = Modifier.width(200.dp).height(52.dp),
+                modifier = Modifier.fillMaxWidth(0.8f).height(64.dp),
                 enabled = !isLoading,
-                shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = AccentOrange)
+                shape = RoundedCornerShape(20.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = AccentOrange,
+                    contentColor = White
+                )
             ) {
                 if (isLoading) {
                     CircularProgressIndicator(color = White, modifier = Modifier.size(24.dp))
                 } else {
-                    Text("Create", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        "Create", 
+                        fontSize = 18.sp, 
+                        fontWeight = FontWeight.Bold,
+                        color = White
+                    )
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             Row {
                 Text("Already have an account? ", color = White.copy(alpha = 0.8f), fontSize = 13.sp)

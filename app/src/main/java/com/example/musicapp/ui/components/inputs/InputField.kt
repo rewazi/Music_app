@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.ui.theme.*
 
 @Composable
 fun InputField(
@@ -24,13 +25,13 @@ fun InputField(
     hint: String,
     isPassword: Boolean = false,
     leadingIcon: Int? = null,
-    showBorder: Boolean = false
+    showBorder: Boolean = true
 ) {
-    val shape = RoundedCornerShape(12.dp)
+    val shape = RoundedCornerShape(15.dp) // Figma specs: 15dp corner radius
 
     val autoIcon: Painter = painterResource(
         id = leadingIcon ?: when {
-            hint.contains("Email", true) -> R.drawable.mail
+            hint.contains("Email", true) || hint.contains("Username", true) -> R.drawable.user
             hint.contains("Password", true) -> R.drawable.lock
             else -> R.drawable.user
         }
@@ -39,23 +40,28 @@ fun InputField(
     TextField(
         value = value,
         onValueChange = onValueChange,
-        placeholder = { Text(hint, color = Color(0xFFAAAAAA)) },
-        leadingIcon = { Icon(autoIcon, contentDescription = null, tint = Color(0xFFC47A27)) },
+        placeholder = { Text(hint, color = White.copy(alpha = 0.5f), fontSize = 16.sp) },
+        leadingIcon = { 
+            Icon(
+                painter = autoIcon, 
+                contentDescription = null, 
+                tint = HighlightOrange, 
+                modifier = Modifier.padding(start = 12.dp) 
+            ) 
+        },
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 12.dp)
-            .let { 
-                if (showBorder) it.border(width = 1.dp, color = Color.White, shape = shape) 
-                else it 
-            },
+            .padding(bottom = 16.dp)
+            .border(width = 1.dp, color = White.copy(alpha = 0.8f), shape = shape), // Figma specs: 1px border thickness
         singleLine = true,
+        textStyle = TextStyle(color = White, fontSize = 16.sp),
         shape = shape,
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color(0xFF6B2347).copy(alpha = 0.5f),
-            unfocusedContainerColor = Color(0xFF6B2347).copy(alpha = 0.3f),
-            focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White,
+            focusedContainerColor = BgMedium.copy(alpha = 0.4f),
+            unfocusedContainerColor = BgMedium.copy(alpha = 0.4f),
+            focusedTextColor = White,
+            unfocusedTextColor = White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
