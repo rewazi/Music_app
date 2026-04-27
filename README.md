@@ -1,12 +1,23 @@
 # MATVIKO - New Music App  
 
-## Navigation
-- [Project Description](#project-description)
-- [Features](#features)
-- [Development Model](#development-model)
-- [Project Structure](#project-structure)
-- [Team Members](#team-members)
-- [How to Run](#how-to-run)
+## 📑 Table of Contents
+
+* [Project Description](#project-description)
+* [Features](#features)
+* [Tech Stack](#tech-stack)
+* [Architecture](#architecture)
+* [Figma Design](#figma-design)
+* [Figma Prototype](#figma-prototype)
+* [Screens Description](#screens-description)
+* [Design Screenshots](#design-screenshots)
+  * [Registration Screen](#registration-screen)
+  * [Login Screen](#login-screen)
+  * [Main Screen](#main-screen)
+* [Development Model](#development-model)
+* [Project Structure](#project-structure)
+* [Backend Structure](#backend-structure)
+* [Team Members](#team-members)
+* [How to Run](#how-to-run)
 
 ## Project Description  
 **MATVIKO** is a mobile music streaming application similar to Spotify. The main goal of the project is to create a modern and user-friendly app that allows users to easily discover, listen to, and save music in one place.  
@@ -17,6 +28,57 @@
 - Search for songs, artists, and albums using keywords  
 - Save favorite tracks for quick access  
 - More features will be added during development  
+
+## Tech Stack  
+
+- **Frontend Language:** Kotlin
+- **Backend Language:** PHP  
+- **UI:** Jetpack Compose  
+- **Database:** MySQL(XAMPP)  
+- **Architecture:** No formal architecture (planned: Component-Based Architecture)  
+- **Tools:** Android Studio, Gradle  
+
+## Architecture  
+
+The project follows a **Component-Based Architecture** approach.  
+
+The application is built using independent and reusable components, primarily through Jetpack Compose. Each UI element (such as input fields, buttons, cards, and screens) is designed as a separate composable function with a single responsibility.  
+
+This approach allows:  
+- Better code reusability across different screens  
+- Easier maintenance and scalability  
+- Clear separation of UI elements into modular parts  
+- Faster development by combining existing components  
+
+Component-Based Architecture is well-suited for modern Android development with Jetpack Compose, as it aligns with declarative UI principles and promotes a clean, structured codebase.  
+
+## Figma Design
+[Open Design](https://embed.figma.com/design/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO?node-id=0-1&embed-host=share)
+
+## Figma Prototype
+[Open Prototype](https://www.figma.com/proto/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO)
+
+## Screens description
+
+- **Registration Screen**  
+  User registration
+
+- **Login Screen**  
+  User authentication  
+
+- **Main Screen**  
+  Main page with music
+
+## Design Screenshots   
+
+### Registration Screen
+![Registration](screenshots/Registration.png)
+
+### Login Screen
+![Login](screenshots/Login.png)
+
+### Main Screen
+![Main](screenshots/Main.png)
 
 ## Development Model  
 The project uses the **Kanban** development model to keep the workflow organized and efficient.  
@@ -40,7 +102,17 @@ com.example.musicapp/
 └── test/                    # Unit and instrumented tests
 ```
 
-## Team Members
+## Backend Structure
+
+```
+musicapp/
+└── db_config.php # Database settings
+└── get_albums.php # Album and banner display function
+└── login.php # Login function
+└── register.php # Registration function
+```
+
+## Team Members  
 
 | Name | GitHub Username |
 |------|----------------|
