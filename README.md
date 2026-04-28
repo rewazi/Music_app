@@ -52,6 +52,8 @@ This approach allows:
 
 Component-Based Architecture is well-suited for modern Android development with Jetpack Compose, as it aligns with declarative UI principles and promotes a clean, structured codebase.  
 
+[Open Architecture Diagram](https://www.figma.com/board/f9TFTRNdip6BZ9Y0K4THaf/MATVIKO-Diagram?node-id=0-1&t=XfEVVuiMuiSAzOnC-1)
+
 ## Figma Design
 [Open Design](https://embed.figma.com/design/P5DO2QEGCQcNSQ66ul3D8d/MATVIKO?node-id=0-1&embed-host=share)
 
