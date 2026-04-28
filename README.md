@@ -72,13 +72,13 @@ Component-Based Architecture is well-suited for modern Android development with 
 ## Design Screenshots   
 
 ### Registration Screen
-![Registration](screenshots/Registration.png)
+![Registration](templates/screenshots/Registration.png)
 
 ### Login Screen
-![Login](screenshots/Login.png)
+![Login](templates/screenshots/Login.png)
 
 ### Main Screen
-![Main](screenshots/Main.png)
+![Main](templates/screenshots/Main.png)
 
 ## Development Model  
 
