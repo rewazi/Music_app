@@ -1,7 +1,7 @@
 ## Personas
 
 ### Persona 1 — Alex Johnson (Casual Listener)
-![Persona1-Alex.png](Persona1-Alex.png)
+<img src="Persona1-Alex.png" height="300"/>
 
 **Age:** 20  
 **Occupation:** Student  
@@ -32,7 +32,7 @@
 ---
 
 ### Persona 2 — Maria Petrova (Music Collector)
-![Person2-Maria.png](Person2-Maria.png)
+<img src="Person2-Maria.png" width="300"/>
 
 **Age:** 27  
 **Occupation:** Office Worker  
