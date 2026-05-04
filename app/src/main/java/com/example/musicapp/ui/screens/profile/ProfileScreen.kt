@@ -18,7 +18,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import com.example.musicapp.R
+import com.example.musicapp.data.local.PreferenceManager
 import com.example.musicapp.ui.components.items.ProfileMenuItem
 import com.example.musicapp.ui.components.player.BottomPlayerBar
 import com.example.musicapp.ui.theme.*
@@ -27,8 +29,13 @@ import com.example.musicapp.ui.theme.*
 @Composable
 fun ProfileScreen(
     onNavigateBack: () -> Unit = {},
-    onLogout: () -> Unit = {}
+    onLogout: () -> Unit = {},
+    onNavigateToEditProfile: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+    val preferenceManager = remember { PreferenceManager(context) }
+    val username = remember { preferenceManager.getUsername() }
+
     Scaffold(
         containerColor = BgDark,
         bottomBar = { BottomPlayerBar() }
@@ -103,7 +110,7 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "User",
+                    text = username,
                     color = White,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
@@ -127,7 +134,8 @@ fun ProfileScreen(
                     ) {
                         ProfileMenuItem(
                             icon = Icons.Default.Edit,
-                            label = "Edit profile"
+                            label = "Edit profile",
+                            onClick = onNavigateToEditProfile
                         )
                         ProfileMenuItem(
                             icon = Icons.Default.Lock,
@@ -140,7 +148,10 @@ fun ProfileScreen(
                         ProfileMenuItem(
                             icon = Icons.AutoMirrored.Filled.ExitToApp,
                             label = "Log Out",
-                            onClick = onLogout
+                            onClick = {
+                                preferenceManager.clear()
+                                onLogout()
+                            }
                         )
                     }
                 }

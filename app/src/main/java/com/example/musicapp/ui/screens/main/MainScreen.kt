@@ -14,7 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import com.example.musicapp.R
+import com.example.musicapp.data.local.PreferenceManager
 import com.example.musicapp.ui.components.player.BottomPlayerBar
 import kotlinx.coroutines.launch
 
@@ -25,6 +27,9 @@ fun MainScreen(
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val preferenceManager = remember { PreferenceManager(context) }
+    val username = remember { preferenceManager.getUsername() }
     var showSongInfo by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -52,7 +57,7 @@ fun MainScreen(
                             ) {
                                 Spacer(modifier = Modifier.weight(1f))
                                 Text(
-                                    text = "Welcome", 
+                                    text = "Welcome, $username",
                                     color = Color.White, 
                                     fontSize = 16.sp,
                                     modifier = Modifier.clickable { onNavigateToProfile() }
