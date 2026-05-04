@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.musicapp.ui.components.layout.rememberWaveAnimationState
 import com.example.musicapp.ui.screens.login.LoginScreen
 import com.example.musicapp.ui.screens.main.MainScreen
+import com.example.musicapp.ui.screens.profile.EditProfileScreen
 import com.example.musicapp.ui.screens.profile.ProfileScreen
 import com.example.musicapp.ui.screens.registration.RegistrationScreen
 
@@ -64,6 +65,16 @@ fun AppNavGraph() {
                     navController.navigate("login") {
                         popUpTo("main") { inclusive = true }
                     }
+                },
+                onNavigateToEditProfile = {
+                    navController.navigate("edit_profile")
+                }
+            )
+        }
+        composable("edit_profile") {
+            EditProfileScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
                 }
             )
         }

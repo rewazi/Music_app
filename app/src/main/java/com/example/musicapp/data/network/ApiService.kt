@@ -25,4 +25,11 @@ interface ApiService {
 
     @GET("get_albums.php")
     suspend fun getAlbums(): List<Album>
+
+    @FormUrlEncoded
+    @POST("update_profile.php")
+    suspend fun updateProfile(
+        @Field("user_id") userId: Int,
+        @Field("username") username: String
+    ): AuthResponse
 }
