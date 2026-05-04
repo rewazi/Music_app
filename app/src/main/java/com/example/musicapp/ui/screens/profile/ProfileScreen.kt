@@ -26,14 +26,15 @@ import com.example.musicapp.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
-    onNavigateBack: () -> Unit = {}
+    onNavigateBack: () -> Unit = {},
+    onLogout: () -> Unit = {}
 ) {
     Scaffold(
         containerColor = BgDark,
         bottomBar = { BottomPlayerBar() }
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
-            // Orange Header Background
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -60,7 +61,7 @@ fun ProfileScreen(
             ) {
                 Spacer(modifier = Modifier.height(85.dp))
 
-                // Avatar
+
                 Box(
                     contentAlignment = Alignment.BottomEnd,
                     modifier = Modifier.size(110.dp)
@@ -81,7 +82,7 @@ fun ProfileScreen(
                             modifier = Modifier.fillMaxSize(0.7f)
                         )
                     }
-                    // Edit badge - Fixed palette (Yellow bg, White icon)
+
                     Box(
                         modifier = Modifier
                             .size(26.dp)
@@ -93,7 +94,7 @@ fun ProfileScreen(
                         Icon(
                             imageVector = Icons.Default.Edit,
                             contentDescription = null,
-                            tint = White, // Fixed to White per screenshot
+                            tint = White,
                             modifier = Modifier.size(14.dp)
                         )
                     }
@@ -110,14 +111,14 @@ fun ProfileScreen(
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                // Orange Card - Now with rounded bottom (cut off earlier)
+
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp)
-                        .wrapContentHeight(), // Cut off earlier
+                        .wrapContentHeight(),
                     color = AccentOrange,
-                    shape = RoundedCornerShape(40.dp) // Fully rounded container
+                    shape = RoundedCornerShape(40.dp)
                 ) {
                     Column(
                         modifier = Modifier
@@ -138,7 +139,8 @@ fun ProfileScreen(
                         )
                         ProfileMenuItem(
                             icon = Icons.AutoMirrored.Filled.ExitToApp,
-                            label = "Log Out"
+                            label = "Log Out",
+                            onClick = onLogout
                         )
                     }
                 }

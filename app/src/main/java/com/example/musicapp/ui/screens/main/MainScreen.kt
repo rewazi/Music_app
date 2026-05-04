@@ -30,6 +30,7 @@ fun MainScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         ModalNavigationDrawer(
             drawerState = drawerState,
+            gesturesEnabled = drawerState.isOpen,
             drawerContent = {
                 ModalDrawerSheet(
                     drawerContainerColor = Color(0xFF4A1535),
