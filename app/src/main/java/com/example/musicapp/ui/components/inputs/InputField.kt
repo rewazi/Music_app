@@ -29,6 +29,7 @@ fun InputField(
 ) {
     val shape = RoundedCornerShape(15.dp) // Figma specs: 15dp corner radius
 
+    // Test commit
     val autoIcon: Painter = painterResource(
         id = leadingIcon ?: when {
             hint.contains("Email", true) || hint.contains("Username", true) -> R.drawable.user
