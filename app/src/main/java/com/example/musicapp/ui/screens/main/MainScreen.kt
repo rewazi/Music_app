@@ -14,8 +14,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
+import android.util.Log
+import android.widget.Toast
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
 import com.example.musicapp.R
 import com.example.musicapp.data.model.Album
+import com.example.musicapp.data.model.Song
 import com.example.musicapp.ui.components.player.BottomPlayerBar
 import kotlinx.coroutines.launch
 
@@ -28,6 +35,44 @@ fun MainScreen(
     val scope = rememberCoroutineScope()
     var showSongInfo by remember { mutableStateOf(false) }
     var selectedAlbum by remember { mutableStateOf<Album?>(null) }
+    
+    var currentSong by remember { mutableStateOf<Song?>(null) }
+    var isPlaying by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+    val exoPlayer = remember {
+        ExoPlayer.Builder(context).build().apply {
+            addListener(object : Player.Listener {
+                override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
+                    Log.e("MusicApp", "ExoPlayer Error: ${error.message}", error)
+                    Toast.makeText(context, "Playback Error: ${error.errorCodeName}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            exoPlayer.release()
+        }
+    }
+
+    LaunchedEffect(currentSong) {
+        currentSong?.let { song ->
+            Log.d("MusicApp", "Playing song: ${song.title} from URL: ${song.songUrl}")
+            exoPlayer.setMediaItem(MediaItem.fromUri(song.songUrl))
+            exoPlayer.prepare()
+            if (isPlaying) exoPlayer.play()
+        }
+    }
+
+    LaunchedEffect(isPlaying) {
+        if (isPlaying) {
+            exoPlayer.play()
+        } else {
+            exoPlayer.pause()
+        }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         ModalNavigationDrawer(
@@ -94,7 +139,12 @@ fun MainScreen(
                     )
                 },
                 bottomBar = {
-                    BottomPlayerBar(onShowSongInfo = { showSongInfo = true })
+                    BottomPlayerBar(
+                        currentSong = currentSong,
+                        isPlaying = isPlaying,
+                        onTogglePlay = { isPlaying = !isPlaying },
+                        onShowSongInfo = { if (currentSong != null) showSongInfo = true }
+                    )
                 },
                 containerColor = Color(0xFF2D0B20)
             ) { padding ->
@@ -107,7 +157,11 @@ fun MainScreen(
                     AlbumDetailsScreen(
                         album = selectedAlbum!!,
                         padding = padding,
-                        onBack = { selectedAlbum = null }
+                        onBack = { selectedAlbum = null },
+                        onSongClick = { 
+                            currentSong = it
+                            isPlaying = true
+                        }
                     )
                 }
             }
@@ -126,7 +180,12 @@ fun MainScreen(
             ),
             modifier = Modifier.fillMaxSize()
         ) {
-            SongInfoFullScreen(onClose = { showSongInfo = false })
+            SongInfoFullScreen(
+                song = currentSong,
+                isPlaying = isPlaying,
+                onTogglePlay = { isPlaying = !isPlaying },
+                onClose = { showSongInfo = false }
+            )
         }
     }
 }

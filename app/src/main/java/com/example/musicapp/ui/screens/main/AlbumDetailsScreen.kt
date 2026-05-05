@@ -34,7 +34,8 @@ import com.example.musicapp.data.network.RetrofitClient
 fun AlbumDetailsScreen(
     album: Album,
     padding: PaddingValues,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onSongClick: (Song) -> Unit = {}
 ) {
     var songs by remember { mutableStateOf<List<Song>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
@@ -141,7 +142,7 @@ fun AlbumDetailsScreen(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         songs.forEach { song ->
-                            SongListItem(song)
+                            SongListItem(song, onClick = { onSongClick(song) })
                         }
                     }
                 }
@@ -182,11 +183,11 @@ fun AlbumDetailsScreen(
 }
 
 @Composable
-fun SongListItem(song: Song) {
+fun SongListItem(song: Song, onClick: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { /* Play song */ }
+            .clickable { onClick() }
             .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

@@ -15,15 +15,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.musicapp.R
+import com.example.musicapp.data.model.Song
 import com.example.musicapp.ui.components.player.InfoChip
 
 @Composable
-fun SongInfoFullScreen(onClose: () -> Unit) {
+fun SongInfoFullScreen(
+    song: Song?,
+    isPlaying: Boolean,
+    onTogglePlay: () -> Unit,
+    onClose: () -> Unit
+) {
     var offsetY by remember { mutableStateOf(0f) }
 
     Box(
@@ -96,17 +104,26 @@ fun SongInfoFullScreen(onClose: () -> Unit) {
 
             Box(
                 modifier = Modifier
-                    .size(280.dp)
-                    .clip(RoundedCornerShape(24.dp))
-                    .background(Color(0xFFD95D39)),
+                    .size(320.dp)
+                    .clip(RoundedCornerShape(32.dp))
+                    .background(Color(0xFFF18805)),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    Icons.Default.ThumbUp,
-                    contentDescription = null,
-                    tint = Color.White.copy(alpha = 0.5f),
-                    modifier = Modifier.size(120.dp)
-                )
+                if (song != null) {
+                    AsyncImage(
+                        model = song.imageUrl,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Icon(
+                        Icons.Default.ThumbUp,
+                        contentDescription = null,
+                        tint = Color.White.copy(alpha = 0.5f),
+                        modifier = Modifier.size(120.dp)
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -119,14 +136,14 @@ fun SongInfoFullScreen(onClose: () -> Unit) {
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Song Title",
+                        text = song?.title ?: "Select a song",
                         color = Color.White,
                         fontSize = 26.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Singer Name",
+                        text = song?.singerName ?: "",
                         color = Color(0xFFD95D39),
                         fontSize = 16.sp
                     )
@@ -166,7 +183,6 @@ fun SongInfoFullScreen(onClose: () -> Unit) {
             Spacer(modifier = Modifier.height(28.dp))
 
 
-            var isPlaying by remember { mutableStateOf(false) }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
@@ -193,11 +209,11 @@ fun SongInfoFullScreen(onClose: () -> Unit) {
                         .size(72.dp)
                         .clip(RoundedCornerShape(50))
                         .background(Color(0xFFE8622A))
-                        .clickable { isPlaying = !isPlaying },
+                        .clickable { onTogglePlay() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = if (isPlaying) Icons.Default.Close else Icons.Default.PlayArrow,
+                        imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
                         contentDescription = "Play/Pause",
                         tint = Color.White,
                         modifier = Modifier.size(40.dp)
@@ -233,7 +249,7 @@ fun SongInfoFullScreen(onClose: () -> Unit) {
                 InfoChip(label = "Genre", value = "Pop")
                 InfoChip(label = "Year", value = "2024")
                 InfoChip(label = "Duration", value = "3:45")
-                InfoChip(label = "Album", value = "Title")
+                InfoChip(label = "Album", value = song?.title?.split(" ")?.get(0) ?: "Album")
             }
         }
     }

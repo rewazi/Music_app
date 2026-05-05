@@ -2,6 +2,7 @@ package com.example.musicapp.ui.components.player
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
@@ -16,11 +17,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.data.model.Song
 import com.example.musicapp.ui.theme.AccentOrange
 import com.example.musicapp.ui.theme.BgMedium
 
 @Composable
-fun BottomPlayerBar(onShowSongInfo: () -> Unit = {}) {
+fun BottomPlayerBar(
+    currentSong: Song? = null,
+    isPlaying: Boolean = false,
+    onTogglePlay: () -> Unit = {},
+    onShowSongInfo: () -> Unit = {}
+) {
     var isRepeatActive by remember { mutableStateOf(false) }
     var isVectoreActive by remember { mutableStateOf(false) }
     var skipPrevFlash by remember { mutableStateOf(false) }
@@ -56,9 +63,9 @@ fun BottomPlayerBar(onShowSongInfo: () -> Unit = {}) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                IconButton(onClick = { }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = onTogglePlay, modifier = Modifier.size(40.dp)) {
                     Icon(
-                        imageVector = Icons.Default.PlayArrow,
+                        imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
                         contentDescription = null,
                         tint = AccentOrange,
                         modifier = Modifier.size(24.dp)
@@ -88,7 +95,7 @@ fun BottomPlayerBar(onShowSongInfo: () -> Unit = {}) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Singer - Song Title",
+                    text = if (currentSong != null) "${currentSong.singerName} - ${currentSong.title}" else "Select a song",
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
