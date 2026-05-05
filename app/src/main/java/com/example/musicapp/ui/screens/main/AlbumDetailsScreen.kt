@@ -1,10 +1,9 @@
 package com.example.musicapp.ui.screens.main
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -17,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -147,20 +147,36 @@ fun AlbumDetailsScreen(
                 }
                 
                 // Extra spacer for player
-                Spacer(modifier = Modifier.height(100.dp))
+                Spacer(modifier = Modifier.height(72.dp))
             }
         }
 
-        // Scroll indicator
+        // Improved Scroll indicator
         if (scrollState.maxValue > 0) {
+            val alpha by animateFloatAsState(targetValue = if (scrollState.isScrollInProgress) 1f else 0.5f)
+            val trackHeight = 250.dp
+            val thumbHeight = 40.dp
+
             Box(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .padding(end = 4.dp)
-                    .fillMaxHeight(0.3f)
+                    .height(trackHeight)
                     .width(4.dp)
-                    .background(Color(0xFFF18805).copy(alpha = 0.5f), shape = RoundedCornerShape(2.dp))
-            )
+                    .alpha(alpha)
+                    .background(Color(0xFFF18805).copy(alpha = 0.3f), shape = RoundedCornerShape(2.dp))
+            ) {
+                val scrollPercent = scrollState.value.toFloat() / scrollState.maxValue.toFloat()
+                val thumbOffset = (trackHeight - thumbHeight) * scrollPercent
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(thumbHeight)
+                        .offset(y = thumbOffset)
+                        .background(Color.White, shape = RoundedCornerShape(2.dp))
+                )
+            }
         }
     }
 }

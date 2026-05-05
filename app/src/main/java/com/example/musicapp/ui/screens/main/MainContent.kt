@@ -176,29 +176,32 @@ fun MainContent(
                 }
                 
                 // Extra spacer to make sure player doesn't hide content
-                Spacer(modifier = Modifier.height(80.dp))
+                Spacer(modifier = Modifier.height(72.dp))
             }
 
-            // Scroll indicator (Right side)
+            // Improved Scroll indicator
             if (scrollState.maxValue > 0) {
                 val alpha by animateFloatAsState(targetValue = if (scrollState.isScrollInProgress) 1f else 0.5f)
+                val trackHeight = 250.dp
+                val thumbHeight = 40.dp
+                
                 Box(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(end = 4.dp)
-                        .fillMaxHeight(0.3f) // Scale indicator height
+                        .height(trackHeight)
                         .width(4.dp)
                         .alpha(alpha)
-                        .background(Color(0xFFF18805), shape = RoundedCornerShape(2.dp))
+                        .background(Color(0xFFF18805).copy(alpha = 0.3f), shape = RoundedCornerShape(2.dp))
                 ) {
-                    // This is a simple static indicator for now, 
-                    // for dynamic movement we'd need to calculate thumb position
                     val scrollPercent = scrollState.value.toFloat() / scrollState.maxValue.toFloat()
+                    val thumbOffset = (trackHeight - thumbHeight) * scrollPercent
+                    
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .fillMaxHeight(0.2f)
-                            .offset(y = (scrollPercent * 100).dp) // approximation
+                            .height(thumbHeight)
+                            .offset(y = thumbOffset)
                             .background(Color.White, shape = RoundedCornerShape(2.dp))
                     )
                 }
