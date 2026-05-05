@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.data.model.Album
 import com.example.musicapp.ui.components.player.BottomPlayerBar
 import kotlinx.coroutines.launch
 
@@ -26,6 +27,7 @@ fun MainScreen(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var showSongInfo by remember { mutableStateOf(false) }
+    var selectedAlbum by remember { mutableStateOf<Album?>(null) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         ModalNavigationDrawer(
@@ -68,9 +70,17 @@ fun MainScreen(
                             }
                         },
                         navigationIcon = {
-                            IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                            IconButton(onClick = { 
+                                if (selectedAlbum == null) {
+                                    scope.launch { drawerState.open() }
+                                } else {
+                                    selectedAlbum = null
+                                }
+                            }) {
                                 Icon(
-                                    painter = painterResource(R.drawable.menu), 
+                                    painter = painterResource(
+                                        if (selectedAlbum == null) R.drawable.menu else R.drawable.ic_back_curved
+                                    ),
                                     contentDescription = null, 
                                     tint = Color(0xFFF0A202)
                                 )
@@ -88,7 +98,18 @@ fun MainScreen(
                 },
                 containerColor = Color(0xFF2D0B20)
             ) { padding ->
-                MainContent(padding)
+                if (selectedAlbum == null) {
+                    MainContent(padding, onAlbumClick = { selectedAlbum = it })
+                } else {
+                    androidx.activity.compose.BackHandler {
+                        selectedAlbum = null
+                    }
+                    AlbumDetailsScreen(
+                        album = selectedAlbum!!,
+                        padding = padding,
+                        onBack = { selectedAlbum = null }
+                    )
+                }
             }
         }
 

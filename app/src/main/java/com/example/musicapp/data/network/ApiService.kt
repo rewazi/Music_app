@@ -2,6 +2,7 @@ package com.example.musicapp.data.network
 
 import com.example.musicapp.data.model.Album
 import com.example.musicapp.data.model.AuthResponse
+import com.example.musicapp.data.model.Song
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -25,4 +26,9 @@ interface ApiService {
 
     @GET("get_albums.php")
     suspend fun getAlbums(): List<Album>
+
+    @GET("get_songs.php")
+    suspend fun getSongs(
+        @retrofit2.http.Query("album_id") albumId: Int
+    ): List<Song>
 }

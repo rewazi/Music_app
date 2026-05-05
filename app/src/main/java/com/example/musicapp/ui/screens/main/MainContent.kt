@@ -31,7 +31,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainContent(padding: PaddingValues) {
+fun MainContent(
+    padding: PaddingValues,
+    onAlbumClick: (Album) -> Unit = {}
+) {
     var albums by remember { mutableStateOf<List<Album>>(emptyList()) }
     var error by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
@@ -79,7 +82,11 @@ fun MainContent(padding: PaddingValues) {
                     beyondViewportPageCount = 1
                 ) { page ->
                     val album = albums[page]
-                    Box(modifier = Modifier.fillMaxSize().background(Color(0xFFF18805))) {
+                    Box(modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color(0xFFF18805))
+                        .clickable { onAlbumClick(album) }
+                    ) {
                         AsyncImage(
                             model = album.bannerUrl,
                             contentDescription = null,
@@ -151,7 +158,7 @@ fun MainContent(padding: PaddingValues) {
                 modifier = Modifier.weight(1f)
             ) {
                 items(albums) { album ->
-                    AlbumItem(album)
+                    AlbumItem(album, onClick = { onAlbumClick(album) })
                 }
             }
         }
