@@ -83,9 +83,13 @@ while($row = $result->fetch_assoc()) {
     $songId = $row['id'];
 
     // 1. Чиним аудио (song_url)
-    if (empty($row['song_url']) || strpos($row['song_url'], '10.0.2.2') !== false) {
+    // Ссылки Deezer (dzcdn.net или cdns-preview) временные и часто меняются.
+    // Если ссылка пустая, ведет на локальный IP или является старой ссылкой Deezer — обновляем её.
+    $isDeezerLink = strpos($row['song_url'], 'dzcdn.net') !== false || strpos($row['song_url'], 'cdns-preview') !== false;
+
+    if (empty($row['song_url']) || strpos($row['song_url'], '10.0.2.2') !== false || $isDeezerLink) {
         $preview = getTrackPreviewFromDeezer($row['singer_name'], $row['title']);
-        if ($preview) {
+        if ($preview && $preview !== $row['song_url']) {
             $row['song_url'] = $preview;
             $updateNeeded = true;
         }
