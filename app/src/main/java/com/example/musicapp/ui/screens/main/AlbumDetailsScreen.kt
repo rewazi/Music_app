@@ -35,6 +35,7 @@ fun AlbumDetailsScreen(
     album: Album,
     padding: PaddingValues,
     onBack: () -> Unit,
+    onSongsLoaded: (List<Song>) -> Unit = {},
     onSongClick: (Song) -> Unit = {}
 ) {
     var songs by remember { mutableStateOf<List<Song>>(emptyList()) }
@@ -44,6 +45,7 @@ fun AlbumDetailsScreen(
     LaunchedEffect(album.id) {
         try {
             songs = RetrofitClient.instance.getSongs(album.id)
+            onSongsLoaded(songs)
         } catch (e: Exception) {
             // handle error
         } finally {
