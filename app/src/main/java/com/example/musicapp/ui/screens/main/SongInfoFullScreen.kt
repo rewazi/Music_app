@@ -29,7 +29,16 @@ import com.example.musicapp.ui.components.player.InfoChip
 fun SongInfoFullScreen(
     song: Song?,
     isPlaying: Boolean,
+    isShuffleMode: Boolean,
+    repeatMode: Int,
+    currentPosition: Long,
+    duration: Long,
     onTogglePlay: () -> Unit,
+    onToggleShuffle: () -> Unit,
+    onToggleRepeat: () -> Unit,
+    onNext: () -> Unit,
+    onPrevious: () -> Unit,
+    onSeek: (Float) -> Unit,
     onClose: () -> Unit
 ) {
     var offsetY by remember { mutableStateOf(0f) }
@@ -161,10 +170,10 @@ fun SongInfoFullScreen(
             Spacer(modifier = Modifier.height(28.dp))
 
 
-            var progress by remember { mutableStateOf(0.35f) }
+            val progress = if (duration > 0) currentPosition.toFloat() / duration.toFloat() else 0f
             Slider(
                 value = progress,
-                onValueChange = { progress = it },
+                onValueChange = { onSeek(it) },
                 colors = SliderDefaults.colors(
                     thumbColor = Color(0xFFE8622A),
                     activeTrackColor = Color(0xFFE8622A),
@@ -176,8 +185,8 @@ fun SongInfoFullScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text("1:23", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
-                Text("3:45", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
+                Text(formatTime(currentPosition), color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
+                Text(formatTime(duration), color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
             }
 
             Spacer(modifier = Modifier.height(28.dp))
@@ -188,15 +197,15 @@ fun SongInfoFullScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = {}) {
+                IconButton(onClick = onToggleRepeat) {
                     Icon(
                         painter = painterResource(id = R.drawable.material_symbols_repeat),
                         contentDescription = "Repeat",
-                        tint = Color(0xFFD95D39),
+                        tint = if (repeatMode != 0) Color.White else Color(0xFFD95D39),
                         modifier = Modifier.size(28.dp)
                     )
                 }
-                IconButton(onClick = {}, modifier = Modifier.size(52.dp)) {
+                IconButton(onClick = onPrevious, modifier = Modifier.size(52.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.skip_next),
                         contentDescription = "Previous",
@@ -219,7 +228,7 @@ fun SongInfoFullScreen(
                         modifier = Modifier.size(40.dp)
                     )
                 }
-                IconButton(onClick = {}, modifier = Modifier.size(52.dp)) {
+                IconButton(onClick = onNext, modifier = Modifier.size(52.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.skip_next1),
                         contentDescription = "Next",
@@ -227,11 +236,11 @@ fun SongInfoFullScreen(
                         modifier = Modifier.size(36.dp)
                     )
                 }
-                IconButton(onClick = {}) {
+                IconButton(onClick = onToggleShuffle) {
                     Icon(
                         painter = painterResource(id = R.drawable.vector),
                         contentDescription = "Volume",
-                        tint = Color(0xFFD95D39),
+                        tint = if (isShuffleMode) Color.White else Color(0xFFD95D39),
                         modifier = Modifier.size(28.dp)
                     )
                 }
@@ -253,4 +262,11 @@ fun SongInfoFullScreen(
             }
         }
     }
+}
+
+fun formatTime(milliseconds: Long): String {
+    val totalSeconds = milliseconds / 1000
+    val minutes = totalSeconds / 60
+    val seconds = totalSeconds % 60
+    return "%02d:%02d".format(minutes, seconds)
 }

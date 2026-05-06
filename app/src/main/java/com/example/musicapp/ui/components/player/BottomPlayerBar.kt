@@ -25,11 +25,15 @@ import com.example.musicapp.ui.theme.BgMedium
 fun BottomPlayerBar(
     currentSong: Song? = null,
     isPlaying: Boolean = false,
+    isShuffleMode: Boolean = false,
+    repeatMode: Int = 0, // 0: off, 1: one, 2: all
     onTogglePlay: () -> Unit = {},
+    onNext: () -> Unit = {},
+    onPrevious: () -> Unit = {},
+    onToggleShuffle: () -> Unit = {},
+    onToggleRepeat: () -> Unit = {},
     onShowSongInfo: () -> Unit = {}
 ) {
-    var isRepeatActive by remember { mutableStateOf(false) }
-    var isVectoreActive by remember { mutableStateOf(false) }
     var skipPrevFlash by remember { mutableStateOf(false) }
     var skipNextFlash by remember { mutableStateOf(false) }
 
@@ -71,15 +75,15 @@ fun BottomPlayerBar(
                         modifier = Modifier.size(24.dp)
                     )
                 }
-                IconButton(onClick = { isRepeatActive = !isRepeatActive }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = onToggleRepeat, modifier = Modifier.size(40.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.material_symbols_repeat),
                         contentDescription = null,
-                        tint = if (isRepeatActive) Color.White else AccentOrange,
+                        tint = if (repeatMode != 0) Color.White else AccentOrange,
                         modifier = Modifier.size(22.dp)
                     )
                 }
-                IconButton(onClick = { skipPrevFlash = true }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = onPrevious, modifier = Modifier.size(40.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.skip_next),
                         contentDescription = null,
@@ -111,7 +115,7 @@ fun BottomPlayerBar(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                IconButton(onClick = { skipNextFlash = true }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = onNext, modifier = Modifier.size(40.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.skip_next1),
                         contentDescription = null,
@@ -119,11 +123,11 @@ fun BottomPlayerBar(
                         modifier = Modifier.size(22.dp)
                     )
                 }
-                IconButton(onClick = { isVectoreActive = !isVectoreActive }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = onToggleShuffle, modifier = Modifier.size(40.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.vector),
                         contentDescription = null,
-                        tint = if (isVectoreActive) Color.White else AccentOrange,
+                        tint = if (isShuffleMode) Color.White else AccentOrange,
                         modifier = Modifier.size(22.dp)
                     )
                 }

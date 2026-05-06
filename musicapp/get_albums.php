@@ -2,72 +2,75 @@
 header('Content-Type: application/json');
 require_once 'db_config.php';
 
-function getAlbumImageFromLastFM($artist, $album) {
-    $apiKey = getenv('LASTFM_API_KEY');
-    if (!$apiKey) {
-        return null;
-    }
-    $url = "https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=" . $apiKey . "&artist=" . urlencode($artist) . "&album=" . urlencode($album) . "&format=json";
-    
-    $response = @file_get_contents($url);
-    if ($response === false) {
-        return null;
-    }
-    
-    $data = json_decode($response, true);
-    if (isset($data['album']['image'])) {
-        // Last.fm provides images in various sizes. We'll try to get the largest one (mega, extralarge, etc.)
-        $sizes = ['mega', 'extralarge', 'large', 'medium', 'small'];
-        $imageMap = [];
-        foreach ($data['album']['image'] as $image) {
-            if (!empty($image['#text'])) {
-                $imageMap[$image['size']] = $image['#text'];
-            }
-        }
+function fetchUrl($url) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+    $response = curl_exec($ch);
+    curl_close($ch);
+    return $response;
+}
 
-        foreach ($sizes as $size) {
-            if (!empty($imageMap[$size])) {
-                return $imageMap[$size];
+function getAlbumArt($artist, $album) {
+    // 1. Пытаемся найти через Deezer (самый стабильный вариант)
+    $url = "https://api.deezer.com/search/album?q=" . urlencode($artist . " " . $album) . "&limit=1";
+    $res = fetchUrl($url);
+    if ($res) {
+        $data = json_decode($res, true);
+        if (!empty($data['data'][0]['cover_xl'])) return $data['data'][0]['cover_xl'];
+        if (!empty($data['data'][0]['cover_big'])) return $data['data'][0]['cover_big'];
+    }
+
+    // 2. Если не вышло, пробуем Last.fm (если есть ключ)
+    $apiKey = getenv('LASTFM_API_KEY');
+    if ($apiKey) {
+        $url = "https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=$apiKey&artist=" . urlencode($artist) . "&album=" . urlencode($album) . "&format=json";
+        $res = fetchUrl($url);
+        if ($res) {
+            $data = json_decode($res, true);
+            if (isset($data['album']['image'])) {
+                $images = $data['album']['image'];
+                for ($i = count($images) - 1; $i >= 0; $i--) {
+                    if (!empty($images[$i]['#text'])) return $images[$i]['#text'];
+                }
             }
         }
     }
     return null;
 }
 
-$sql = "SELECT a.*, s.name as singer_name
-        FROM albums a
-        JOIN singers s ON a.singer_id = s.id";
-
+$sql = "SELECT a.*, s.name as singer_name FROM albums a JOIN singers s ON a.singer_id = s.id";
 $result = $conn->query($sql);
 $data = [];
 
 if ($result) {
     while($row = $result->fetch_assoc()) {
-        $updateNeeded = false;
+        $img = $row['image_url'];
+        $banner = $row['banner_url'];
 
-        // Check if image_url or banner_url is empty or a placeholder
-        $isImageEmpty = empty($row['image_url']) || strpos($row['image_url'], 'placeholder.com') !== false;
-        $isBannerEmpty = empty($row['banner_url']) || strpos($row['banner_url'], 'placeholder.com') !== false;
+        $isEmpty = empty($img) || strpos($img, 'placeholder') !== false || strlen($img) < 10;
 
-        if ($isImageEmpty || $isBannerEmpty) {
-            $fetched_url = getAlbumImageFromLastFM($row['singer_name'], $row['title']);
-            if ($fetched_url) {
-                // Set both to the same image as requested
-                $row['image_url'] = $fetched_url;
-                $row['banner_url'] = $fetched_url;
-                $updateNeeded = true;
+        if ($isEmpty) {
+            $found = getAlbumArt($row['singer_name'], $row['title']);
+            if ($found) {
+                $img = $found;
+                $banner = $found;
+                // Сохраняем в БД навсегда
+                $stmt = $conn->prepare("UPDATE albums SET image_url = ?, banner_url = ? WHERE id = ?");
+                $stmt->bind_param("ssi", $img, $banner, $row['id']);
+                $stmt->execute();
+                $stmt->close();
             }
         }
 
-        if ($updateNeeded) {
-            $update_sql = "UPDATE albums SET image_url = ?, banner_url = ? WHERE id = ?";
-            $stmt = $conn->prepare($update_sql);
-            $stmt->bind_param("ssi", $row['image_url'], $row['banner_url'], $row['id']);
-            $stmt->execute();
-            $stmt->close();
-        }
+        $row['image_url'] = $img;
+        $row['banner_url'] = $banner;
         $data[] = $row;
     }
 }
-
 echo json_encode($data);
+?>
