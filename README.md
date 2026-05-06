@@ -95,6 +95,8 @@ The project uses the **Kanban** development model to keep the workflow organized
 ```
 com.example.musicapp/
 ├── data/                         # Data layer
+│   ├── local/                    # Local data
+│   │   ├── Album.kt              # Local session and user data management
 │   ├── model/                    # Data models
 │   │   ├── Album.kt              # Album model
 │   │   ├── Song.kt               # Song model
@@ -114,8 +116,8 @@ com.example.musicapp/
 │   ├── screens/                  # Application screens (full pages)
 │   │   ├── login/                # Logic and layout of the entrance
 │   │   ├── registration/         # Registration
-│   │   ├── main/                 # Home screen (MainContent, DrawerContent, SongInfoFullScreen)
-│   │   └── profile/              # User profile
+│   │   ├── main/                 # Home screen (MainContent, DrawerContent, SongInfoFullScreen and so on)
+│   │   └── profile/              # User profile and change of data
 │   └── theme/                    # Theming (Color.kt, Theme.kt, Type.kt)
 ├── MainActivity.kt               # Entry point, shared state management (Screen, WaveState)
 ├── manifests/                    # Application manifest
@@ -126,10 +128,11 @@ com.example.musicapp/
 
 ```
 musicapp/
-└── db_config.php # Database settings
-└── get_albums.php # Album and banner display function
-└── login.php # Login function
-└── register.php # Registration function
+├── db_config.php      # Database connection settings (MySQL)
+├── get_albums.php     # Fetches albums + auto-finds covers via Deezer/Last.fm
+├── get_songs.php      # Fetches songs + dynamic Deezer URL refresh
+├── login.php          # User authentication function
+└── register.php       # New user registration function
 ```
 
 ## Team Members  
