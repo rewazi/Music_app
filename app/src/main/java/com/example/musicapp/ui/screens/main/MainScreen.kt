@@ -25,6 +25,8 @@ import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import com.example.musicapp.R
 import com.example.musicapp.data.model.Album
 import com.example.musicapp.data.model.Song
+import com.example.musicapp.R
+import com.example.musicapp.data.local.PreferenceManager
 import com.example.musicapp.ui.components.player.BottomPlayerBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -38,6 +40,9 @@ fun MainScreen(
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val preferenceManager = remember { PreferenceManager(context) }
+    val username = remember { preferenceManager.getUsername() }
     var showSongInfo by remember { mutableStateOf(false) }
     var selectedAlbum by remember { mutableStateOf<Album?>(null) }
     var currentAlbumSongs by remember { mutableStateOf<List<Song>>(emptyList()) }
@@ -143,6 +148,7 @@ fun MainScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         ModalNavigationDrawer(
             drawerState = drawerState,
+            gesturesEnabled = drawerState.isOpen,
             drawerContent = {
                 ModalDrawerSheet(
                     drawerContainerColor = Color(0xFF4A1535),
@@ -165,7 +171,7 @@ fun MainScreen(
                             ) {
                                 Spacer(modifier = Modifier.weight(1f))
                                 Text(
-                                    text = "Welcome", 
+                                    text = "Welcome, $username",
                                     color = Color.White, 
                                     fontSize = 16.sp,
                                     modifier = Modifier.clickable { onNavigateToProfile() }

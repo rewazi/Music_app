@@ -31,4 +31,10 @@ interface ApiService {
     suspend fun getSongs(
         @retrofit2.http.Query("album_id") albumId: Int
     ): List<Song>
+    @FormUrlEncoded
+    @POST("update_profile.php")
+    suspend fun updateProfile(
+        @Field("user_id") userId: Int,
+        @Field("username") username: String
+    ): AuthResponse
 }

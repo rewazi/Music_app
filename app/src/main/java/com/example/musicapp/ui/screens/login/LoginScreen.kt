@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.data.local.PreferenceManager
 import com.example.musicapp.data.network.RetrofitClient
 import com.example.musicapp.ui.components.inputs.InputField
 import com.example.musicapp.ui.components.layout.WaveBottom
@@ -36,6 +37,7 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val preferenceManager = remember { PreferenceManager(context) }
     
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -123,6 +125,10 @@ fun LoginScreen(
                         try {
                             val response = RetrofitClient.instance.login(email, password)
                             if (response.success) {
+                                // Save the username from response or fallback to the email/username entered by user
+                                val savedName = response.username ?: email
+                                preferenceManager.saveUsername(savedName)
+                                response.userId?.let { preferenceManager.saveUserId(it) }
                                 Toast.makeText(context, "Login successful!", Toast.LENGTH_SHORT).show()
                                 onLoginSuccess()
                             } else {

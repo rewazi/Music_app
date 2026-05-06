@@ -10,7 +10,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
     if (password_verify($password, $user['password'])) {
-        echo json_encode(["success" => true, "message" => "Login successful", "user_id" => $user['id']]);
+        echo json_encode(["success" => true, "message" => "Login successful", "user_id" => $user['id'], "username" => $user['username']]);
     } else {
         echo json_encode(["success" => false, "message" => "Invalid password"]);
     }

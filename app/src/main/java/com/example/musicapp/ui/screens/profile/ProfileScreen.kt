@@ -22,7 +22,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import com.example.musicapp.R
+import com.example.musicapp.data.local.PreferenceManager
 import com.example.musicapp.ui.components.items.ProfileMenuItem
 import com.example.musicapp.ui.components.player.BottomPlayerBar
 import com.example.musicapp.ui.theme.*
@@ -30,9 +32,14 @@ import com.example.musicapp.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
-    onNavigateBack: () -> Unit = {}
+    onNavigateBack: () -> Unit = {},
+    onLogout: () -> Unit = {},
+    onNavigateToEditProfile: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
+    val preferenceManager = remember { PreferenceManager(context) }
+    val username = remember { preferenceManager.getUsername() }
 
     Scaffold(
         containerColor = BgDark,
@@ -40,6 +47,7 @@ fun ProfileScreen(
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
             // Orange Header Background (Doesn't scroll)
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -68,7 +76,7 @@ fun ProfileScreen(
             ) {
                 Spacer(modifier = Modifier.height(85.dp))
 
-                // Avatar
+
                 Box(
                     contentAlignment = Alignment.BottomEnd,
                     modifier = Modifier.size(110.dp)
@@ -90,6 +98,7 @@ fun ProfileScreen(
                         )
                     }
                     // Edit badge
+
                     Box(
                         modifier = Modifier
                             .size(26.dp)
@@ -110,7 +119,7 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "User",
+                    text = username,
                     color = White,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
@@ -119,6 +128,7 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.height(30.dp))
 
                 // Orange Card
+
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -134,7 +144,8 @@ fun ProfileScreen(
                     ) {
                         ProfileMenuItem(
                             icon = Icons.Default.Edit,
-                            label = "Edit profile"
+                            label = "Edit profile",
+                            onClick = onNavigateToEditProfile
                         )
                         ProfileMenuItem(
                             icon = Icons.Default.Lock,
@@ -146,7 +157,11 @@ fun ProfileScreen(
                         )
                         ProfileMenuItem(
                             icon = Icons.AutoMirrored.Filled.ExitToApp,
-                            label = "Log Out"
+                            label = "Log Out",
+                            onClick = {
+                                preferenceManager.clear()
+                                onLogout()
+                            }
                         )
                     }
                 }
