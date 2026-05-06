@@ -25,7 +25,6 @@ import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import com.example.musicapp.R
 import com.example.musicapp.data.model.Album
 import com.example.musicapp.data.model.Song
-import com.example.musicapp.R
 import com.example.musicapp.data.local.PreferenceManager
 import com.example.musicapp.ui.components.player.BottomPlayerBar
 import kotlinx.coroutines.delay
@@ -38,9 +37,9 @@ import kotlin.OptIn
 fun MainScreen(
     onNavigateToProfile: () -> Unit = {}
 ) {
+    val context = LocalContext.current
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
     val preferenceManager = remember { PreferenceManager(context) }
     val username = remember { preferenceManager.getUsername() }
     var showSongInfo by remember { mutableStateOf(false) }
@@ -54,7 +53,6 @@ fun MainScreen(
     var isShuffleMode by remember { mutableStateOf(false) }
     var repeatMode by remember { mutableIntStateOf(Player.REPEAT_MODE_OFF) }
 
-    val context = LocalContext.current
     val exoPlayer = remember {
         val httpDataSourceFactory = DefaultHttpDataSource.Factory()
             .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
