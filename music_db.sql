@@ -87,8 +87,26 @@ CREATE TABLE `songs` (
 --
 
 INSERT INTO `songs` (`id`, `title`, `singer_id`, `album_id`, `image_url`, `banner_url`, `song_url`) VALUES
-(1, 'Blinding Lights', 1, 1, 'https://via.placeholder.com/300', 'https://via.placeholder.com/600x220', 'http://10.0.2.2/musicapp/songs/lights.mp3'),
-(2, 'Believer', 2, 2, 'https://via.placeholder.com/300', 'https://via.placeholder.com/600x220', 'http://10.0.2.2/musicapp/songs/believer.mp3');
+(1, 'Blinding Lights', 1, 1, '', '', 'http://10.0.2.2/musicapp/songs/lights.mp3'),
+(2, 'Save Your Tears', 1, 1, '', '', 'http://10.0.2.2/musicapp/songs/save_your_tears.mp3'),
+(3, 'Heartless', 1, 1, '', '', 'http://10.0.2.2/musicapp/songs/heartless.mp3'),
+(4, 'In Your Eyes', 1, 1, '', '', 'http://10.0.2.2/musicapp/songs/in_your_eyes.mp3'),
+(5, 'After Hours', 1, 1, '', '', 'http://10.0.2.2/musicapp/songs/after_hours.mp3'),
+(6, 'Believer', 2, 2, '', '', 'http://10.0.2.2/musicapp/songs/believer.mp3'),
+(7, 'Enemy', 2, 2, '', '', 'http://10.0.2.2/musicapp/songs/enemy.mp3'),
+(8, 'Thunder', 2, 2, '', '', 'http://10.0.2.2/musicapp/songs/thunder.mp3'),
+(9, 'Bones', 2, 2, '', '', 'http://10.0.2.2/musicapp/songs/bones.mp3'),
+(10, 'Natural', 2, 2, '', '', 'http://10.0.2.2/musicapp/songs/natural.mp3'),
+(11, 'Do I Wanna Know?', 3, 3, '', '', 'http://10.0.2.2/musicapp/songs/do_i_wanna_know.mp3'),
+(12, 'R U Mine?', 3, 3, '', '', 'http://10.0.2.2/musicapp/songs/r_u_mine.mp3'),
+(13, 'Arabella', 3, 3, '', '', 'http://10.0.2.2/musicapp/songs/arabella.mp3'),
+(14, 'Why d You Only Call Me When You re High?', 3, 3, '', '', 'http://10.0.2.2/musicapp/songs/high.mp3'),
+(15, 'I Wanna Be Yours', 3, 3, '', '', 'http://10.0.2.2/musicapp/songs/i_wanna_be_yours.mp3'),
+(16, 'Don t Start Now', 4, 4, '', '', 'http://10.0.2.2/musicapp/songs/dont_start_now.mp3'),
+(17, 'Physical', 4, 4, '', '', 'http://10.0.2.2/musicapp/songs/physical.mp3'),
+(18, 'Levitating', 4, 4, '', '', 'http://10.0.2.2/musicapp/songs/levitating.mp3'),
+(19, 'Break My Heart', 4, 4, '', '', 'http://10.0.2.2/musicapp/songs/break_my_heart.mp3'),
+(20, 'Love Again', 4, 4, '', '', 'http://10.0.2.2/musicapp/songs/love_again.mp3');
 
 -- --------------------------------------------------------
 

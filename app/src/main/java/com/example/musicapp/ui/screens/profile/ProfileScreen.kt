@@ -1,10 +1,13 @@
 package com.example.musicapp.ui.screens.profile
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.*
@@ -12,6 +15,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -32,6 +36,7 @@ fun ProfileScreen(
     onLogout: () -> Unit = {},
     onNavigateToEditProfile: () -> Unit = {}
 ) {
+    val scrollState = rememberScrollState()
     val context = LocalContext.current
     val preferenceManager = remember { PreferenceManager(context) }
     val username = remember { preferenceManager.getUsername() }
@@ -41,6 +46,7 @@ fun ProfileScreen(
         bottomBar = { BottomPlayerBar() }
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+            // Orange Header Background (Doesn't scroll)
 
             Box(
                 modifier = Modifier
@@ -63,7 +69,9 @@ fun ProfileScreen(
             }
 
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.height(85.dp))
@@ -89,6 +97,7 @@ fun ProfileScreen(
                             modifier = Modifier.fillMaxSize(0.7f)
                         )
                     }
+                    // Edit badge
 
                     Box(
                         modifier = Modifier
@@ -118,6 +127,7 @@ fun ProfileScreen(
 
                 Spacer(modifier = Modifier.height(30.dp))
 
+                // Orange Card
 
                 Surface(
                     modifier = Modifier
@@ -154,6 +164,37 @@ fun ProfileScreen(
                             }
                         )
                     }
+                }
+                
+                // Extra spacer for player
+                Spacer(modifier = Modifier.height(72.dp))
+            }
+
+            // Scroll indicator
+            if (scrollState.maxValue > 0) {
+                val alpha by animateFloatAsState(targetValue = if (scrollState.isScrollInProgress) 1f else 0.5f)
+                val trackHeight = 250.dp
+                val thumbHeight = 40.dp
+
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(end = 4.dp)
+                        .height(trackHeight)
+                        .width(4.dp)
+                        .alpha(alpha)
+                        .background(Color(0xFFF18805).copy(alpha = 0.3f), shape = RoundedCornerShape(2.dp))
+                ) {
+                    val scrollPercent = scrollState.value.toFloat() / scrollState.maxValue.toFloat()
+                    val thumbOffset = (trackHeight - thumbHeight) * scrollPercent
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(thumbHeight)
+                            .offset(y = thumbOffset)
+                            .background(Color.White, shape = RoundedCornerShape(2.dp))
+                    )
                 }
             }
         }

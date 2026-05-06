@@ -1,6 +1,7 @@
 package com.example.musicapp.ui.components.items
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -17,8 +18,11 @@ import coil.compose.AsyncImage
 import com.example.musicapp.data.model.Album
 
 @Composable
-fun AlbumItem(album: Album) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+fun AlbumItem(album: Album, onClick: () -> Unit = {}) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.clickable { onClick() }
+    ) {
         AsyncImage(
             model = album.imageUrl,
             contentDescription = null,

@@ -2,6 +2,7 @@ package com.example.musicapp.ui.components.player
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
@@ -16,13 +17,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
+import com.example.musicapp.data.model.Song
 import com.example.musicapp.ui.theme.AccentOrange
 import com.example.musicapp.ui.theme.BgMedium
 
 @Composable
-fun BottomPlayerBar(onShowSongInfo: () -> Unit = {}) {
-    var isRepeatActive by remember { mutableStateOf(false) }
-    var isVectoreActive by remember { mutableStateOf(false) }
+fun BottomPlayerBar(
+    currentSong: Song? = null,
+    isPlaying: Boolean = false,
+    isShuffleMode: Boolean = false,
+    repeatMode: Int = 0, // 0: off, 1: one, 2: all
+    onTogglePlay: () -> Unit = {},
+    onNext: () -> Unit = {},
+    onPrevious: () -> Unit = {},
+    onToggleShuffle: () -> Unit = {},
+    onToggleRepeat: () -> Unit = {},
+    onShowSongInfo: () -> Unit = {}
+) {
     var skipPrevFlash by remember { mutableStateOf(false) }
     var skipNextFlash by remember { mutableStateOf(false) }
 
@@ -56,23 +67,23 @@ fun BottomPlayerBar(onShowSongInfo: () -> Unit = {}) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                IconButton(onClick = { }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = onTogglePlay, modifier = Modifier.size(40.dp)) {
                     Icon(
-                        imageVector = Icons.Default.PlayArrow,
+                        imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
                         contentDescription = null,
                         tint = AccentOrange,
                         modifier = Modifier.size(24.dp)
                     )
                 }
-                IconButton(onClick = { isRepeatActive = !isRepeatActive }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = onToggleRepeat, modifier = Modifier.size(40.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.material_symbols_repeat),
                         contentDescription = null,
-                        tint = if (isRepeatActive) Color.White else AccentOrange,
+                        tint = if (repeatMode != 0) Color.White else AccentOrange,
                         modifier = Modifier.size(22.dp)
                     )
                 }
-                IconButton(onClick = { skipPrevFlash = true }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = onPrevious, modifier = Modifier.size(40.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.skip_next),
                         contentDescription = null,
@@ -88,7 +99,7 @@ fun BottomPlayerBar(onShowSongInfo: () -> Unit = {}) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Singer - Song Title",
+                    text = if (currentSong != null) "${currentSong.singerName} - ${currentSong.title}" else "Select a song",
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
@@ -104,7 +115,7 @@ fun BottomPlayerBar(onShowSongInfo: () -> Unit = {}) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                IconButton(onClick = { skipNextFlash = true }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = onNext, modifier = Modifier.size(40.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.skip_next1),
                         contentDescription = null,
@@ -112,11 +123,11 @@ fun BottomPlayerBar(onShowSongInfo: () -> Unit = {}) {
                         modifier = Modifier.size(22.dp)
                     )
                 }
-                IconButton(onClick = { isVectoreActive = !isVectoreActive }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = onToggleShuffle, modifier = Modifier.size(40.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.vector),
                         contentDescription = null,
-                        tint = if (isVectoreActive) Color.White else AccentOrange,
+                        tint = if (isShuffleMode) Color.White else AccentOrange,
                         modifier = Modifier.size(22.dp)
                     )
                 }
